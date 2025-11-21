@@ -1,16 +1,19 @@
-FROM eclipse-temurin:21-jdk-jammy
+# Base Image
+FROM eclipse-temurin:21-jre-alpine
 
+# Work Directory 설정
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y git maven bash wget unzip && rm -rf /var/lib/apt/lists/*
+# JAR 파일 복사 (실제 파일 이름으로 수정 필요)
+# COPY graphhopper-web/target/graphhopper-web-12.0-SNAPSHOT-shaded.jar /app/app.jar
+COPY graphhopper/web/target/graphhopper-web-12.0-SNAPSHOT.jar /app/app.jar
 
-# GraphHopper 소스 복사
-COPY . /app/
+# 설정 파일 복사
+COPY config.yml /app/config.yml
 
-# Build GraphHopper 11
-RUN mvn -q -DskipTests=true package
-
+# 포트 노출
 EXPOSE 8989
 
-# entrypoint
-ENTRYPOINT ["./graphhopper.sh"]
+# 실행 명령
+ENTRYPOINT ["java", "-jar", "app.jar"]
+CMD ["server", "config.yml"]
