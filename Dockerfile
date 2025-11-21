@@ -6,7 +6,7 @@ WORKDIR /app
 
 # JAR 파일 복사 (실제 파일 이름으로 수정 필요)
 # COPY graphhopper-web/target/graphhopper-web-12.0-SNAPSHOT-shaded.jar /app/app.jar
-COPY graphhopper/web/target/graphhopper-web-12.0-SNAPSHOT.jar /app/app.jar
+COPY web/target/graphhopper-web-12.0-SNAPSHOT.jar /app/app.jar
 
 # 설정 파일 복사
 COPY config.yml /app/config.yml
